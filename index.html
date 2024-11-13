@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tugas Kelompok</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -16,81 +17,151 @@
     <ul>
         <li><a href="#produk">Produk</a></li>
         <li><a href="#kategori">Kategori</a></li>
+        <li><a href="#testimoni_pelanggan">Testimoni Pelanggan</a></li> <!-- Mengarah ke bagian testimoni -->
         <li><a href="#kontak">Kontak</a></li>
     </ul>
 </nav>
 
 <main>
-    <article id="Produk">
-        <h2>Produk Unggulan</h2>
-        <img src="kue unggulan.jpeg" alt="kue unggulan" width="230" height="280"/>
-        <p>Kami menawarkan berbagai macam kue, mulai dari kue ulang tahun hingga kue perayaan. Berikut adalah beberapa produk kami</p>
+    <article id="produk" class="product">
+        <h2 class="product-title">Produk Unggulan</h2>
+        <img src="kue unggulan.jpeg" alt="kue unggulan" width="230" height="280" class="product-image"/>
+        <p class="product-description">Kami menawarkan berbagai macam kue, mulai dari kue ulang tahun hingga kue perayaan. Berikut adalah beberapa produk kami.</p>
     </article>
 
-    <section>
-        <h2>Kategori Kue</h2>
-        <ul>
-            <li>
-                <h3>Kue Ulang Tahun</h3> <br />
-            <img src="kue ulang tahun.jpeg" alt="kue ulang tahun" width="230" height="270"/>
+    <section id="kategori" class="categories">
+        <h2 class="categories-title">Kategori Kue</h2>
+        <ul class="categories-list">
+            <li class="categories-item">
+    
+                <img src="kue ulang tahun.jpeg" alt="kue ulang tahun" width="230" height="270" class="category-image"/>
+                <h3 class="category-title">Kue Ulang Tahun</h3> 
+                <p>Rp.100.000</p>
             </li>
-
-            <li>
-                <h3>Kue Pernikahan</h3>
-            <img src="kue pernikahan.jpeg" alt="kue pernikahan" width="230" height="280" />
+            <li class="categories-item">
+                
+                <img src="kue pernikahan.jpeg" alt="kue pernikahan" width="230" height="280" class="category-image"/>
+                <h3 class="category-title">Kue Pernikahan</h3>
+                <p>Rp.300.000</p>
             </li>
-
-            <li>
-                <h3>Brownies</h3>
-            <img src="kue Brownies.jpeg" alt="Brownies" width="230" height="280"
+            <li class="categories-item">
+                
+                <img src="kue Brownies.jpeg" alt="Brownies" width="230" height="280" class="category-image"/>
+                <h3 class="category-title">Brownies</h3>
+                <p>Rp.100.000</p>
             </li>
         </ul>
     </section>
 
-    <aside>
-        <h2>Testimoni Pelanggan</h2>
-        <p>"enak sekali kuenya. tidak menyesal beli ditoko ini" - sarah</p>
-        <p>"pelayanan cepat dan ramah, pengiriman juga tepat waktu" - adi</p>
-    </aside>
+    <section id="testimoni_pelanggan">
+    <h2>Berikan Testimoni Anda</h2>
+    <form id="reviewForm" class="review-form">
+        <label for="reviewName">Nama:</label>
+        <input type="text" id="reviewName" required>
+        <br>
+        <label for="reviewText">Testimoni:</label>
+        <textarea id="reviewText" required></textarea>
+        <br>
+        <button type="submit">Kirim Testimoni</button>
+    </form>
 
-    <section>
-        <h2>Harga Kue</h2>
-        <table border="1">
-            <tr>
-                <th>Nama Kue</th>
-                <th>Harga</th>
-            </tr>
-            <tr>
-                <td>Kue ulang tahun</td>
-                <td>Rp 300.000</td>
-            </tr>
-            <tr>
-                <td>kue pernikahan</td>
-                <td>Rp 500.000</td>
-            </tr>
-            <tr>
-                <td>brownies</td>
-                <td>Rp 100.000</td>
-            </tr>
-        </table>
-    </section >
+    <!-- Kontainer untuk menampilkan review -->
+    <div id="reviewsContainer"></div>
+</section>
     
-    <section id="kontak">
-        <h2>hubungi kami</h2>
+    
+    <script>
+    document.getElementById('reviewForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Mencegah reload
+        const name = document.getElementById('reviewName').value;
+        const text = document.getElementById('reviewText').value;
+    
+        if(name && text) {
+            fetch('/submit-review', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, text })
+            })
+            .then(() => alert('Testimoni berhasil dikirim!'))
+            .catch(() => alert('Terjadi kesalahan.'));
+        } else {
+            alert('Harap isi semua kolom!');
+        }
+    });
+    </script>
 
-            <label for="name">Nama:</label>
-            <input type="text" id="name" name="name" required />
+    
+    <section id="kontak" class="contact">
+        <h2 class="contact-title">Hubungi Kami</h2>
+        <form id="contactForm" class="contact-form">
+            <label for="contactName" class="contact-label">Nama:</label>
+            <input type="text" id="contactName" name="name" required class="contact-input"/>
             <br />
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required />
+            <label for="contactEmail" class="contact-label">Email:</label>
+            <input type="email" id="contactEmail" name="email" required class="contact-input"/>
             <br />
-            <label for="pesan">Pesan:</label>
-            <textarea id="pesan" name="pesan" required></textarea>
+            <label for="contactMessage" class="contact-label">Pesan:</label>
+            <textarea id="contactMessage" name="pesan" required class="contact-textarea"></textarea>
             <br />
-            <button type="submit">Kirim</button>
+            <button type="submit" class="contact-button">Kirim</button>
         </form>
     </section>
 </main>
+
+<script>
+// JavaScript untuk menangani review pelanggan
+document.getElementById("reviewForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Mencegah form untuk mengirimkan data secara default
+    
+    const name = document.getElementById("reviewName").value; // Mengambil nilai nama
+    const review = document.getElementById("reviewText").value; // Mengambil nilai review
+
+    // Ambil review yang sudah ada dari localStorage
+    const reviews = JSON.parse(localStorage.getItem("customerReviews")) || [];
+
+    // Tambahkan review baru
+    reviews.push({ name, review });
+    localStorage.setItem("customerReviews", JSON.stringify(reviews));
+
+    // Tampilkan review baru di halaman
+    displayReviews();
+    this.reset(); // Reset form setelah pengiriman
+});
+
+function displayReviews() {
+    const reviewsContainer = document.getElementById("reviewsContainer");
+    reviewsContainer.innerHTML = ""; // Kosongkan kontainer sebelum menampilkan ulang
+
+    const reviews = JSON.parse(localStorage.getItem("customerReviews")) || [];
+    reviews.forEach(review => {
+        const reviewElement = document.createElement("div");
+        reviewElement.classList.add("review");
+        reviewElement.innerHTML = `<strong>${review.name}</strong>: ${review.review}`;
+        reviewsContainer.appendChild(reviewElement);
+    });
+}
+
+
+// JavaScript untuk menangani pesan dari form "Hubungi Kami"
+document.getElementById("contactForm").addEventListener('submit', function(event) {
+    event.preventDefault(); // Mencegah form dari pengiriman default
+    
+    const contactName = document.getElementById("contactName").value;
+    const email = document.getElementById("contactEmail").value;
+    const pesan = document.getElementById("contactMessage").value;
+
+    // Membuat pesan untuk dikirim ke WhatsApp
+    const whatsappMessage = `Nama: ${contactName}%0AEmail: ${email}%0APesan: ${pesan}`;
+    const phoneNumber = '6281236242317'; // Ganti dengan nomor WhatsApp Anda, termasuk kode negara (tanpa + atau 0 di depan)
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
+
+    // Membuka WhatsApp dengan pesan yang sudah disiapkan
+    window.open(whatsappURL, '_blank');
+
+    // Reset form setelah pengiriman
+    this.reset(); 
+});
+</script>
 
 </body>
 </html>
